@@ -131,10 +131,10 @@ struct PlayerPaddle2
 	float hieght;
 	float x;
 	float y;
-	unsigned int moveLeftKey;
-	unsigned int moveRightKey;
-	unsigned int moveUpKey;
-	unsigned int moveDownKey;
+	unsigned int moveLeftKey2;
+	unsigned int moveRightKey2;
+	unsigned int moveUpKey2;
+	unsigned int moveDownKey2;
 	unsigned int leftMoveExtreeme;
 	unsigned int rightMoveExtreeme;
 	unsigned int topMoveExtreeme;
@@ -154,10 +154,10 @@ struct PlayerPaddle2
 
 	void SetMovementKey(unsigned int a_moveLeft, unsigned int a_moveRight, unsigned int a_moveUp, unsigned int a_moveDown)
 	{
-		moveLeftKey = a_moveLeft;
-		moveRightKey = a_moveRight;
-		moveUpKey = a_moveUp;
-		moveDownKey = a_moveDown;
+		moveLeftKey2 = a_moveLeft;
+		moveRightKey2 = a_moveRight;
+		moveUpKey2 = a_moveUp;
+		moveDownKey2 = a_moveDown;
 	}
 
 	void SetMoveExtreeme(unsigned int a_leftExtreeme, unsigned int a_rightExtreeme, unsigned int a_topExtreeme, unsigned int a_bottomExtreeme)
@@ -168,45 +168,45 @@ struct PlayerPaddle2
 		bottomMoveExtreeme = a_bottomExtreeme;
 	}
 
-	void Move(float a_timeStep, float a_speed)
+	void Move2(float a_timeStep, float a_speed)
 	{
 		//Moving left
-		if (IsKeyDown(moveLeftKey))
+		if (IsKeyDown(moveLeftKey2))
 		{
-			xPos -= a_timeStep * a_speed;
-			if (xPos < (leftMoveExtreeme + width*.5f))
+			x -= a_timeStep * a_speed;
+			if (x < (leftMoveExtreeme + width*.5f))
 			{
-				xPos = (leftMoveExtreeme + width*.5f);
+				x = (leftMoveExtreeme + width*.5f);
 			}
 		}
 
 		//Moving Right
-		if (IsKeyDown(moveRightKey))
+		if (IsKeyDown(moveRightKey2))
 		{
-			xPos += a_timeStep * a_speed;
-			if (xPos >(rightMoveExtreeme - width*.5f))
+			x += a_timeStep * a_speed;
+			if (x >(rightMoveExtreeme - width*.5f))
 			{
-				xPos = (rightMoveExtreeme - width*.5f);
+				x = (rightMoveExtreeme - width*.5f);
 			}
 		}
 
 		//Moving Up
-		if (IsKeyDown(moveUpKey))
+		if (IsKeyDown(moveUpKey2))
 		{
 			yPos += a_timeStep * a_speed;
-			if (yPos > (topMoveExtreeme + hieght*.5f))
+			if (y > (topMoveExtreeme + hieght*.5f))
 			{
-				yPos = (topMoveExtreeme + hieght*.5f);
+				y = (topMoveExtreeme + hieght*.5f);
 			}
 		}
 
 		//Moving Down
-		if (IsKeyDown(moveDownKey))
+		if (IsKeyDown(moveDownKey2))
 		{
 			yPos -= a_timeStep * a_speed;
-			if (yPos < (bottomMoveExtreeme + hieght*.5f))
+			if (y < (bottomMoveExtreeme + hieght*.5f))
 			{
-				yPos = (bottomMoveExtreeme + hieght*.5f);
+				y = (bottomMoveExtreeme + hieght*.5f);
 			}
 		}
 		//Move the player sprite
@@ -236,11 +236,11 @@ int main( int argc, char* argv[] )
 
 	player2.x = screenWidth - 100;
 	player2.y = 350;
-	player2.SetMoveExtreeme(0.0f, screenWidth *0.4f, screenHieght * 1.2f, screenHieght - screenHieght);
+	player2.SetMoveExtreeme(700, screenWidth *0.0f, screenHieght * 1.2f, screenHieght - screenHieght);
 	player2.SetMovementKey(263, 262, 265, 264);
 	player2.SetSize(69, 96);
 	//Setting player sprite to Invaders bullet as place holder till I get/ make an actual asset
-	player.spriteID = CreateSprite("./images/invaders/invaders_5_00.png", player.width, player.hieght, true);
+	player2.spriteID = CreateSprite("./images/invaders/invaders_5_00.png", player.width, player.hieght, true);
 
 	//Set gamestate to Main menu
 	GAMESTATES eCurrentState = eMAIN_MENU;
@@ -312,6 +312,10 @@ void UpdateGameState(float deltaTime)
 	player.Move(GetDeltaTime(), 150.f);
 	MoveSprite(player.spriteID, xPos, yPos);
 	DrawSprite(player.spriteID);
+
+	player2.Move2(GetDeltaTime(), 150.f);
+	MoveSprite(player2.spriteID, player2.x, player2.y);
+	DrawSprite(player2.spriteID);
 
 
 	SetFont(invadersFont);
