@@ -5,16 +5,20 @@
 //function prototypes!
 void UpdateGameState(float deltaTime);
 void UpdateMainMenu();
+void UpdateEnemyMove();
 
 
 //Adding Global Variables
 const char* scoreOne = "0000";
 const char* scoreTwo = "0000";
+bool ballMoveDown;
+bool ballHitOne;
+bool ballHitTwo;
 
 
 //Adding constant screen width and hieght
-const int screenWidth = 700;
-const int screenHieght = 600;
+const int screenWidth = 1000;
+const int screenHieght = 800;
 
 //Global for player
 float xPos = 100;
@@ -105,9 +109,9 @@ struct PlayerPaddle
 		if (IsKeyDown(moveUpKey))
 		{
 			yPos += a_timeStep * a_speed;
-			if (yPos > (topMoveExtreeme + hieght*.5f))
+			if (yPos > (topMoveExtreeme - hieght*.01f))
 			{
-				yPos = (topMoveExtreeme + hieght*.5f);
+				yPos = (topMoveExtreeme - hieght*.01f);
 			}
 		}
 
@@ -197,9 +201,9 @@ struct PlayerPaddle2
 		if (IsKeyDown(moveUpKey2))
 		{
 			y2 += a_timeStep * a_speed2;
-			if (y2 > (topMoveExtreeme + hieght*.5f))
+			if (y2 > (topMoveExtreeme - hieght*.01f))
 			{
-				y2 = (topMoveExtreeme + hieght*.5f);
+				y2 = (topMoveExtreeme - hieght*.01f);
 			}
 		}
 
@@ -226,11 +230,17 @@ struct Ball
 	float ballHieght;
 	float ballX;
 	float ballY;
-	bool ballMoveDown;
+	bool ballMoveDown = false;
 	int ballMove;
 
 	unsigned int topWall;
 	unsigned int bottomWall;
+
+	void SetBallSize(float a_Width, float a_Hieght)
+	{
+		ballWidth = a_Width;
+		ballHieght = a_Hieght;
+	}
 
 	void SetBallPosition(float a_ballX, float a_ballY)
 	{
@@ -238,20 +248,35 @@ struct Ball
 		ballY = a_ballY + ballY;
 	}
 
-	void BallMovement(int a_timeStep, int a_ballSpeed)
+	void SetBallMoveExtreeme(int a_topWall, int a_bottomWall)
 	{
+		topWall = a_topWall;
+		bottomWall = a_bottomWall;
+	}
 
-		if (ballMove == 1)
-		{
-			ballX += a_timeStep * a_ballSpeed;
-			ballY += a_timeStep * a_ballSpeed;
+	void BallMovement(int a_ballTimeStep, int a_ballSpeed)
+	{	
+			ballX += a_ballTimeStep * a_ballSpeed;
+
+			if (ballMoveDown == false)
+			{
+				ballY += a_ballTimeStep * a_ballSpeed;
+			}
 
 			if (ballY >= topWall + ballHieght * .5f)
 			{
-				ballY -= a_timeStep * a_ballSpeed;
-			}
-		}
+				ballMoveDown = true;
 
+				if (ballMoveDown == true)
+				{
+					ballY -= a_ballTimeStep * a_ballSpeed;
+
+					if (ballY <= bottomWall + ballHieght *.5f)
+					{
+						ballMoveDown = false;
+					}
+				}
+			}
 		MoveSprite(ballSprite, ballX, ballY);
 	}
 };
@@ -262,7 +287,7 @@ int main( int argc, char* argv[] )
 {	
 
 	//build the screen
-    Initialise(700, 800, false, "Pong clone");
+    Initialise(1000, 800, false, "Pong clone");
     SetBackgroundColour(SColour(0, 0, 0, 255));
 
 	//Set up all the variables for Player1
@@ -271,23 +296,29 @@ int main( int argc, char* argv[] )
 	player.y = screenHieght * 0.1f;
 	player.SetMoveExtreeme(0.0f, screenWidth *0.4f, screenHieght * 1.2f, screenHieght - screenHieght);
 	player.SetMovementKey(65, 68, 87, 83);
-	player.SetSize(69, 96);
+	player.SetSize(69, 300);
 	//Setting player sprite to Invaders bullet as place holder till I get/ make an actual asset
 	player.spriteID = CreateSprite("./images/invaders/invaders_5_00.png",player.width, player.hieght, true);
 
-	player2.x2 = screenWidth - 100;
+	player2.x2 = screenWidth * 0.9f;
 	player2.y2 = 400;
 	player2.SetMoveExtreeme2(390, screenWidth, screenHieght * 1.2f, screenHieght - screenHieght);
 	player2.SetMovementKey2(263, 262, 265, 264);
-	player2.SetSize2(69, 96);
+	player2.SetSize2(69, 300);
 	//Setting player sprite to Invaders bullet as place holder till I get/ make an actual asset
 	player2.spriteID = CreateSprite("./images/invaders/invaders_5_00.png", player2.width, player2.hieght, true);
 
 
 	//set all variables for Ball
-	ball.ballX = screenWidth * 0.5f;
-	ball.ballY = screenHieght * 0.5f;
+	ball.ballX = 500;
+	ball.ballY = 400;
+	ball.SetBallMoveExtreeme(screenHieght, 0);
+	ball.SetBallSize(69, 64);
 	ball.ballSprite = CreateSprite("./images/crate_sideup.png", ball.ballWidth, ball.ballHieght, true);
+
+	//set bool values for ball movement
+	ballMoveDown = false;
+	ballHitOne = true;
 
 	//Set gamestate to Main menu
 	GAMESTATES eCurrentState = eMAIN_MENU;
@@ -358,19 +389,71 @@ void UpdateGameState(float deltaTime)
 {
 	//playing the game
 	//player movement handled by player struct
-	player.Move(GetDeltaTime(), 150.f);
+	player.Move(GetDeltaTime(), 500.f);
 	MoveSprite(player.spriteID, xPos, yPos);
 	DrawSprite(player.spriteID);
 
-	player2.Move2(GetDeltaTime(), 150.f);
+	player2.Move2(GetDeltaTime(), 500.f);
 	MoveSprite(player2.spriteID, player2.x2, player2.y2);
 	DrawSprite(player2.spriteID);
 
-	ball.BallMovement(GetDeltaTime(), 100);
+	//ball.BallMovement(GetDeltaTime(), 100.f);
+	UpdateEnemyMove();
 	MoveSprite(ball.ballSprite, ball.ballX, ball.ballY);
 	DrawSprite(ball.ballSprite);
 
 	SetFont(invadersFont);
 	//DrawString(scoreOne, screenWidth * 0.2f, screenHieght * 0.9f);
+	
+}
 
+void UpdateEnemyMove()
+{
+
+	//Beyond this point collision detection for player paddles
+	if (ballHitOne == true)
+	{
+		ball.ballX += 0.1f;
+	}
+
+	if (ballHitTwo == true)
+	{
+		ball.ballX -= 0.1f;
+	}
+
+	if ((ball.ballY + (ball.ballWidth * 0.5)) == (player2.y2 + (player2.width * 0.5)) && ball.ballWidth == (player2.y2 + (player2.hieght * 0.5)))
+	{
+		ballHitOne = false;
+		ballHitTwo = true;
+	}
+
+	if (ball.ballX == xPos && ball.ballY == yPos)
+	{
+		ballHitTwo = false;
+		ballHitOne = true;
+	}
+
+
+		//Beyond this point collision detection for top & bottom wall
+			if (ballMoveDown == false)
+			{
+				ball.ballY += 0.1f;
+			}
+
+			if (ball.ballY >= ball.topWall + ball.ballHieght * .5f)
+			{
+				ballMoveDown = true;
+			}
+
+			if (ballMoveDown == true)
+			{
+				ball.ballY -= 0.1f;
+	
+				if (ball.ballY <= ball.bottomWall + ball.ballHieght *.5f)
+				{
+					ballMoveDown = false;
+				}
+			}
+
+	MoveSprite(ball.ballSprite, ball.ballX, ball.ballY);
 }
