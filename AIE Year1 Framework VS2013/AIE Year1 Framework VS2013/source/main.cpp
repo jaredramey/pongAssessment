@@ -9,11 +9,13 @@ void UpdateEnemyMove();
 
 
 //Adding Global Variables
-const char* scoreOne = "0000";
-const char* scoreTwo = "0000";
+int score1 = 0;
+int score2 = 0;
 bool ballMoveDown;
-bool ballHitOne;
+bool ballHitOne = true;
 bool ballHitTwo;
+bool oneWin = false;
+bool twoWin = false;
 
 
 //Adding constant screen width and hieght
@@ -27,8 +29,6 @@ float yPos = 400;
 //Add Invaders Font for a more retro look
 const char* invadersFont = "./fonts/invaders.fnt";
 
-
-
 //Initialize Enumerators
 enum GAMESTATES
 {
@@ -39,6 +39,7 @@ enum GAMESTATES
 };
 
 //Initializing structs
+//Everything for player 1
 struct PlayerPaddle
 {
 	unsigned int spriteID;
@@ -46,6 +47,10 @@ struct PlayerPaddle
 	float hieght;
 	float x;
 	float y;
+	float upLeftX, upLeftY;
+	float upRightX, upRightY;
+	float bottomLeftX, bottomLeftY;
+	float bottomRightX, bottomRightY;
 	unsigned int moveLeftKey;
 	unsigned int moveRightKey;
 	unsigned int moveUpKey;
@@ -66,6 +71,20 @@ struct PlayerPaddle
 		x = a_x;
 		y = a_y + y;
 	}
+
+	//Set corners for the sprite so collision works later
+	void SetCorners(float a_x, float a_y, float a_width, float a_hieght)
+	{
+		upLeftX = ((a_x - (a_width*0.5f)));
+		upLeftY = ((a_y + (a_hieght*0.5f)));
+		upRightX = ((a_x + (a_width*0.5f)));
+		upRightY = ((a_y + (a_hieght*0.5f)));
+		bottomLeftX = ((a_x - (a_width*0.5f)));
+		bottomLeftY = ((a_y - (a_hieght*0.5f)));
+		bottomRightX = ((a_x + (a_width*0.5f)));
+		bottomRightY = ((a_y - (a_hieght*0.5f)));
+	}
+
 
 	void SetMovementKey(unsigned int a_moveLeft, unsigned int a_moveRight, unsigned int a_moveUp, unsigned int a_moveDown)
 	{
@@ -109,9 +128,9 @@ struct PlayerPaddle
 		if (IsKeyDown(moveUpKey))
 		{
 			yPos += a_timeStep * a_speed;
-			if (yPos > (topMoveExtreeme - hieght*.01f))
+			if (yPos > (topMoveExtreeme - hieght*.8f))
 			{
-				yPos = (topMoveExtreeme - hieght*.01f);
+				yPos = (topMoveExtreeme - hieght*.8f);
 			}
 		}
 
@@ -119,9 +138,9 @@ struct PlayerPaddle
 		if (IsKeyDown(moveDownKey))
 		{
 			yPos -= a_timeStep * a_speed;
-			if (yPos < (bottomMoveExtreeme + hieght*.5f))
+			if (yPos < (bottomMoveExtreeme + hieght*.3f))
 			{
-				yPos = (bottomMoveExtreeme + hieght*.5f);
+				yPos = (bottomMoveExtreeme + hieght*.3f);
 			}
 		}
 		//Move the player sprite
@@ -131,6 +150,7 @@ struct PlayerPaddle
 };
 PlayerPaddle player;
 
+//Everything for player 2
 struct PlayerPaddle2
 {
 	unsigned int spriteID;
@@ -138,6 +158,10 @@ struct PlayerPaddle2
 	float hieght;
 	float x2;
 	float y2;
+	float upLeftX, upLeftY;
+	float upRightX, upRightY;
+	float bottomLeftX, bottomLeftY;
+	float bottomRightX, bottomRightY;
 	unsigned int moveLeftKey2;
 	unsigned int moveRightKey2;
 	unsigned int moveUpKey2;
@@ -157,6 +181,19 @@ struct PlayerPaddle2
 	{
 		x2 = a_x2;
 		y2 = a_y2 + y2;
+	}
+
+	//Set corners for the sprite so collision works later
+	void SetCorners(float a_x, float a_y, float a_width, float a_hieght)
+	{
+		upLeftX = ((a_x - (a_width*0.5f)));
+		upLeftY = ((a_y + (a_hieght*0.5f)));
+		upRightX = ((a_x + (a_width*0.5f)));
+		upRightY = ((a_y + (a_hieght*0.5f)));
+		bottomLeftX = ((a_x - (a_width*0.5f)));
+		bottomLeftY = ((a_y - (a_hieght*0.5f)));
+		bottomRightX = ((a_x + (a_width*0.5f)));
+		bottomRightY = ((a_y - (a_hieght*0.5f)));
 	}
 
 	void SetMovementKey2(unsigned int a_moveLeft2, unsigned int a_moveRight2, unsigned int a_moveUp2, unsigned int a_moveDown2)
@@ -181,9 +218,9 @@ struct PlayerPaddle2
 		if (IsKeyDown(moveLeftKey2))
 		{
 			x2 -= a_timeStep * a_speed2;
-			if (x2 < (leftMoveExtreeme + width*.5f))
+			if (x2 < (leftMoveExtreeme + width*.1f))
 			{
-				x2 = (leftMoveExtreeme + width*.5f);
+				x2 = (leftMoveExtreeme + width*.1f);
 			}
 		}
 
@@ -201,9 +238,9 @@ struct PlayerPaddle2
 		if (IsKeyDown(moveUpKey2))
 		{
 			y2 += a_timeStep * a_speed2;
-			if (y2 > (topMoveExtreeme - hieght*.01f))
+			if (y2 > (topMoveExtreeme - hieght*.8f))
 			{
-				y2 = (topMoveExtreeme - hieght*.01f);
+				y2 = (topMoveExtreeme - hieght*.8f);
 			}
 		}
 
@@ -211,9 +248,9 @@ struct PlayerPaddle2
 		if (IsKeyDown(moveDownKey2))
 		{
 			y2 -= a_timeStep * a_speed2;
-			if (y2 < (bottomMoveExtreeme + hieght*.5f))
+			if (y2 < (bottomMoveExtreeme + hieght*.3f))
 			{
-				y2 = (bottomMoveExtreeme + hieght*.5f);
+				y2 = (bottomMoveExtreeme + hieght*.3f);
 			}
 		}
 		//Move the player sprite
@@ -223,6 +260,7 @@ struct PlayerPaddle2
 };
 PlayerPaddle2 player2;
 
+//Everything for the ball
 struct Ball
 {
 	unsigned int ballSprite;
@@ -230,6 +268,11 @@ struct Ball
 	float ballHieght;
 	float ballX;
 	float ballY;
+	float upLeftX, upLeftY;
+	float upRightX, upRightY;
+	float bottomLeftX, bottomLeftY;
+	float bottomRightX, bottomRightY;
+	float ballVelocity;
 	bool ballMoveDown = false;
 	int ballMove;
 
@@ -246,6 +289,19 @@ struct Ball
 	{
 		ballX = a_ballX;
 		ballY = a_ballY + ballY;
+	}
+
+	//Set corners for the sprite so collision works later
+	void SetCorners(float a_x, float a_y, float a_width, float a_hieght)
+	{
+		upLeftX = ((a_x - (a_width*0.5f)));
+		upLeftY = ((a_y + (a_hieght*0.5f)));
+		upRightX = ((a_x + (a_width*0.5f)));
+		upRightY = ((a_y + (a_hieght*0.5f)));
+		bottomLeftX = ((a_x - (a_width*0.5f)));
+		bottomLeftY = ((a_y - (a_hieght*0.5f)));
+		bottomRightX = ((a_x + (a_width*0.5f)));
+		bottomRightY = ((a_y - (a_hieght*0.5f)));
 	}
 
 	void SetBallMoveExtreeme(int a_topWall, int a_bottomWall)
@@ -282,27 +338,44 @@ struct Ball
 };
 Ball ball;
 
+//Everything for Game Data
+struct GameData
+{
+	float score = 0;
+	char theScore[10];
+};
+GameData scoreOne;
+GameData scoreTwo;
 
 int main( int argc, char* argv[] )
 {	
 
 	//build the screen
-    Initialise(1000, 800, false, "Pong clone");
+    Initialise(1000, 800, false, "Space Invaders Pong");
     SetBackgroundColour(SColour(0, 0, 0, 255));
+
+	//For loop wanted by rubric
+	for (int i = 0; i < 1; i++)
+	{
+		//Yes
+	}
+	//Array wanted by Rubric
+	int myArray[1];
 
 	//Set up all the variables for Player1
 	//origional demensions 59, 89
 	player.x = screenWidth * 0.2f;
 	player.y = screenHieght * 0.1f;
-	player.SetMoveExtreeme(0.0f, screenWidth *0.4f, screenHieght * 1.2f, screenHieght - screenHieght);
+	player.SetMoveExtreeme(0.0f, screenWidth *0.25f, screenHieght * 1.2f, screenHieght - screenHieght);
 	player.SetMovementKey(65, 68, 87, 83);
 	player.SetSize(69, 300);
 	//Setting player sprite to Invaders bullet as place holder till I get/ make an actual asset
 	player.spriteID = CreateSprite("./images/invaders/invaders_5_00.png",player.width, player.hieght, true);
 
+	//Set up all variables for Player 2
 	player2.x2 = screenWidth * 0.9f;
-	player2.y2 = 400;
-	player2.SetMoveExtreeme2(390, screenWidth, screenHieght * 1.2f, screenHieght - screenHieght);
+	player2.y2 = screenHieght * 0.5;
+	player2.SetMoveExtreeme2(screenWidth * 0.75f, screenWidth, screenHieght * 1.2f, screenHieght - screenHieght);
 	player2.SetMovementKey2(263, 262, 265, 264);
 	player2.SetSize2(69, 300);
 	//Setting player sprite to Invaders bullet as place holder till I get/ make an actual asset
@@ -312,13 +385,10 @@ int main( int argc, char* argv[] )
 	//set all variables for Ball
 	ball.ballX = 500;
 	ball.ballY = 400;
+	ball.ballVelocity = .3;
 	ball.SetBallMoveExtreeme(screenHieght, 0);
 	ball.SetBallSize(69, 64);
-	ball.ballSprite = CreateSprite("./images/crate_sideup.png", ball.ballWidth, ball.ballHieght, true);
-
-	//set bool values for ball movement
-	ballMoveDown = false;
-	ballHitOne = true;
+	ball.ballSprite = CreateSprite("./images/invaders/invaders_1_00.png", ball.ballWidth, ball.ballHieght, true);
 
 	//Set gamestate to Main menu
 	GAMESTATES eCurrentState = eMAIN_MENU;
@@ -350,17 +420,99 @@ int main( int argc, char* argv[] )
 			//Get a Random number to decide wich way the ball heads first
 			ball.ballMove = 1; //(rand() % 6);
 			UpdateGameState(deltaT);
+			if (scoreOne.score >= 10 || scoreTwo.score >=10)
+			{
+				eCurrentState = eEND;
+			}
 
 			//if ESC is pressed then exit to main menu
 			if (IsKeyDown(256))
 			{
 				eCurrentState = eMAIN_MENU;
+				//Reset all values and return to start
+				ball.ballX = 500;
+				ball.ballY = 400;
+				ball.ballVelocity = .3;
+				scoreOne.score = 0;
+				scoreTwo.score = 0;
+				xPos = 100;
+				yPos = 400;
+				DrawSprite(player.spriteID);
+				player2.x2 = screenWidth * 0.9f;
+				player2.y2 = screenHieght * 0.5;
+				DrawSprite(player2.spriteID);
 				goto start;
 			}
 
 			break;
 
 		case eEND:
+
+
+			if (scoreOne.score >= 10)
+			{
+				//Reset all values and bool the winner
+				oneWin = true;
+				ball.ballX = 500;
+				ball.ballY = 400;
+				ball.ballVelocity = .3;
+				scoreOne.score = 0;
+				scoreTwo.score = 0;
+				xPos = 100;
+				yPos = 400;
+				DrawSprite(player.spriteID);
+				player2.x2 = screenWidth * 0.9f;
+				player2.y2 = screenHieght * 0.5;
+				DrawSprite(player2.spriteID);
+			}
+
+			if (scoreTwo.score >= 10)
+			{
+				//Reset all values and bool the winner
+				twoWin = true;
+				ball.ballX = 500;
+				ball.ballY = 400;
+				ball.ballVelocity = .3;
+				scoreOne.score = 0;
+				scoreTwo.score = 0;
+				xPos = 100;
+				yPos = 400;
+				DrawSprite(player.spriteID);
+				player2.x2 = screenWidth * 0.9f;
+				player2.y2 = screenHieght * 0.5;
+				DrawSprite(player2.spriteID);
+			}
+
+			//Show who won
+			if (oneWin == true)
+			{
+				DrawString("Player one wins!", screenWidth - 615, screenHieght - 200);
+			}
+
+			if (twoWin == true)
+			{
+				DrawString("Player two wins!", screenWidth - 615, screenHieght - 200);
+			}
+
+			//Let user deside what to do next
+			DrawString("Press Escape to continue to the menu or Enter to return to the game!", screenWidth - 900, screenHieght - 400);
+
+			//If esc is pressed then return to main menu
+			if (IsKeyDown(256))
+			{
+				eCurrentState = eMAIN_MENU;
+				oneWin = false;
+				twoWin = false;
+			}
+
+			//If enter is pressed then go back to game loop
+			if (IsKeyDown(257))
+			{
+				eCurrentState = eGAMEPLAY;
+				oneWin = false;
+				twoWin = false;
+			}
+
 			break;
 
 		default:
@@ -381,29 +533,37 @@ void UpdateMainMenu()
 {
 	//Everything to make main menu
 	SetFont(invadersFont);
-	DrawString("PRESS ENTER YOU FOOL", screenWidth * 0.25f, screenHieght * 0.5);
+	DrawString("Main Menu", screenWidth - 615, screenHieght - 200);
+	DrawString("Press enter to start", screenWidth - 660, screenHieght - 250);
 	
 }
 
 void UpdateGameState(float deltaTime)
 {
+	//Set font to space invaders for a more retro look
+	SetFont(invadersFont);
+	//Print out scores and who they relate to
+	DrawString(itoa(scoreOne.score, scoreOne.theScore, 10), screenWidth* 0.15f, screenHieght *0.05f);
+	DrawString(itoa(scoreTwo.score, scoreTwo.theScore, 10), screenWidth* 0.65f, screenHieght *0.05f);
+	DrawString("Player one:", screenWidth*0.15f, screenHieght *0.1f);
+	DrawString("Player Two:", screenWidth*0.65f, screenHieght *0.1f);
+
 	//playing the game
 	//player movement handled by player struct
-	player.Move(GetDeltaTime(), 500.f);
+	player.Move(GetDeltaTime(), 800.f);
 	MoveSprite(player.spriteID, xPos, yPos);
 	DrawSprite(player.spriteID);
+	player.SetCorners(xPos, yPos, player.width, player.hieght);
 
-	player2.Move2(GetDeltaTime(), 500.f);
+	player2.Move2(GetDeltaTime(), 800.f);
 	MoveSprite(player2.spriteID, player2.x2, player2.y2);
 	DrawSprite(player2.spriteID);
+	player2.SetCorners(player2.x2, player2.y2, player2.width, player2.hieght);
 
-	//ball.BallMovement(GetDeltaTime(), 100.f);
 	UpdateEnemyMove();
 	MoveSprite(ball.ballSprite, ball.ballX, ball.ballY);
 	DrawSprite(ball.ballSprite);
-
-	SetFont(invadersFont);
-	//DrawString(scoreOne, screenWidth * 0.2f, screenHieght * 0.9f);
+	ball.SetCorners(ball.ballX, ball.ballY, ball.ballWidth, ball.ballHieght);
 	
 }
 
@@ -411,33 +571,64 @@ void UpdateEnemyMove()
 {
 
 	//Beyond this point collision detection for player paddles
+	//Collision depends on the corners of the sprites, so a really big long statement check
+	if ((ball.bottomRightX >= player2.bottomLeftX && ball.upRightX >= player2.upLeftX) && (ball.bottomRightY >= player2.bottomLeftY && ball.upRightY <= player2.upLeftY))
+	{
+		//set bools for direction checks
+		ballHitOne = false;
+		ballHitTwo = true;
+		if (ball.ballVelocity <= 2)
+		{
+			ball.ballVelocity += .0002;
+		}
+	}
+
+	//Collision depends on the corners of the sprites, so a really big long statement check (Again)
+	if ((ball.bottomLeftX <= player.bottomRightX && ball.upLeftX <= player.upRightX) && (ball.bottomLeftY >= player.bottomRightY && ball.upLeftY <= player.upRightY))
+	{
+		//set bools for direction checks
+		ballHitOne = true;
+		ballHitTwo = false;
+		if (ball.ballVelocity <= 2)
+		{
+			ball.ballVelocity += .0002;
+		}
+	}
+
 	if (ballHitOne == true)
 	{
-		ball.ballX += 0.1f;
+		ball.ballX += ball.ballVelocity;
 	}
 
 	if (ballHitTwo == true)
 	{
-		ball.ballX -= 0.1f;
+		ball.ballX -= ball.ballVelocity;
 	}
 
-	if ((ball.ballY + (ball.ballWidth * 0.5)) == (player2.y2 + (player2.width * 0.5)) && ball.ballWidth == (player2.y2 + (player2.hieght * 0.5)))
+	//Time to handle score!
+	if (ball.ballX >= screenWidth)
 	{
+		ball.ballX = 500;
+		ball.ballY = 400;
+		scoreOne.score += 1;
 		ballHitOne = false;
 		ballHitTwo = true;
 	}
 
-	if (ball.ballX == xPos && ball.ballY == yPos)
+	else if (ball.ballX <= 0)
 	{
-		ballHitTwo = false;
+		ball.ballX = 500;
+		ball.ballY = 400;
+		scoreTwo.score += 1;
 		ballHitOne = true;
+		ballHitTwo = false;
 	}
 
 
 		//Beyond this point collision detection for top & bottom wall
 			if (ballMoveDown == false)
 			{
-				ball.ballY += 0.1f;
+				ball.ballY += ball.ballVelocity;
 			}
 
 			if (ball.ballY >= ball.topWall + ball.ballHieght * .5f)
@@ -447,7 +638,7 @@ void UpdateEnemyMove()
 
 			if (ballMoveDown == true)
 			{
-				ball.ballY -= 0.1f;
+				ball.ballY -= ball.ballVelocity;
 	
 				if (ball.ballY <= ball.bottomWall + ball.ballHieght *.5f)
 				{
