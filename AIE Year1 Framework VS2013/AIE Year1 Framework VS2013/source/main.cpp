@@ -34,7 +34,8 @@ enum GAMESTATES
 {
 	eMAIN_MENU,
 	eGAMEPLAY,
-	eEND
+	eEND,
+	eHOWTO
 
 };
 
@@ -413,6 +414,11 @@ int main( int argc, char* argv[] )
 				eCurrentState = eGAMEPLAY;
 			}
 
+			if (IsKeyDown(32))
+			{
+				eCurrentState = eHOWTO;
+			}
+
 			break;
 
 		case eGAMEPLAY:
@@ -445,7 +451,28 @@ int main( int argc, char* argv[] )
 			}
 
 			break;
+		case eHOWTO:
+			SetFont(invadersFont);
+			DrawString("How to Play", screenWidth - 615, screenHieght - 200);
+			DrawString("Player One", screenWidth - 810, screenHieght - 250);
+			DrawString("Move Left: A", screenWidth - 810, screenHieght - 280);
+			DrawString("Move Right: D", screenWidth - 810, screenHieght - 310);
+			DrawString("Move Up: W", screenWidth - 810, screenHieght - 340);
+			DrawString("Move Down: S", screenWidth - 810, screenHieght - 370);
+			DrawString("Player Two", screenWidth - 410, screenHieght - 250);
+			DrawString("Move Left: Left Arrow", screenWidth - 410, screenHieght - 280);
+			DrawString("Move Right: Right Arrow", screenWidth - 410, screenHieght - 310);
+			DrawString("Move Up: Up Arrow", screenWidth - 410, screenHieght - 340);
+			DrawString("Move Down: Down Arrow", screenWidth - 410, screenHieght - 370);
 
+			DrawString("Press Excape to return to Main Menu", screenWidth - 740, screenHieght - 450);
+
+			if (IsKeyDown(256))
+			{
+				eCurrentState = eMAIN_MENU;
+			}
+
+			break;
 		case eEND:
 
 
@@ -533,8 +560,10 @@ void UpdateMainMenu()
 {
 	//Everything to make main menu
 	SetFont(invadersFont);
+	DrawString("PONG", screenWidth - 585, screenHieght - 100);
 	DrawString("Main Menu", screenWidth - 615, screenHieght - 200);
-	DrawString("Press enter to start", screenWidth - 660, screenHieght - 250);
+	DrawString("Press Enter to start", screenWidth - 660, screenHieght - 250);
+	DrawString("Press Space to read the How To", screenWidth - 730, screenHieght - 300);
 	
 }
 
