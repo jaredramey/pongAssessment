@@ -606,7 +606,7 @@ void UpdateEnemyMove()
 		//set bools for direction checks
 		ballHitOne = false;
 		ballHitTwo = true;
-		if (ball.ballVelocity <= 2)
+		if (ball.ballVelocity <= 10)
 		{
 			ball.ballVelocity += .0002;
 		}
@@ -618,7 +618,7 @@ void UpdateEnemyMove()
 		//set bools for direction checks
 		ballHitOne = true;
 		ballHitTwo = false;
-		if (ball.ballVelocity <= 2)
+		if (ball.ballVelocity <= 10)
 		{
 			ball.ballVelocity += .0002;
 		}
