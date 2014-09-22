@@ -21,6 +21,7 @@ bool ballHitOne = true;
 bool ballHitTwo;
 bool oneWin = false;
 bool twoWin = false;
+bool exitLoop;
 char highScoreOne[10];
 char highScoreTwo[10];
 
@@ -435,6 +436,11 @@ int main( int argc, char* argv[] )
 				eCurrentState = eHOWTO;
 			}
 
+			if (IsKeyDown(256))
+			{
+				exitLoop = true;
+			}
+
 			break;
 
 		case eGAMEPLAY:
@@ -584,7 +590,7 @@ int main( int argc, char* argv[] )
 			break;
 		}
 
-	} while (FrameworkUpdate() != true);
+	} while (FrameworkUpdate() != true && exitLoop != true);
 
     Shutdown();
 
@@ -602,6 +608,7 @@ void UpdateMainMenu()
 	DrawString("Main Menu", screenWidth - 590, screenHieght - 200);
 	DrawString("Press Enter to start", screenWidth - 630, screenHieght - 250);
 	DrawString("Press Space to read the How To", screenWidth - 700, screenHieght - 300);
+	DrawString("Press Escape to quit", screenWidth - 630, screenHieght - 350);
 	
 }
 
