@@ -1,11 +1,16 @@
 ﻿#include "AIE.h"
 #include <iostream>
+#include <fstream>
+
+using namespace std;
 
 
 //function prototypes!
 void UpdateGameState(float deltaTime);
 void UpdateMainMenu();
 void UpdateEnemyMove();
+void GetHighScore();
+void DisplayHighScore();
 
 
 //Adding Global Variables
@@ -16,6 +21,11 @@ bool ballHitOne = true;
 bool ballHitTwo;
 bool oneWin = false;
 bool twoWin = false;
+char highScoreOne[10];
+char highScoreTwo[10];
+
+//Setting up a file for HighScores
+fstream HighScore;
 
 
 //Adding constant screen width and hieght
@@ -393,7 +403,9 @@ int main( int argc, char* argv[] )
 
 	//Set gamestate to Main menu
 	GAMESTATES eCurrentState = eMAIN_MENU;
-	
+
+	//Get the previous high score
+	GetHighScore();
 
     //Game Loop
 	do
@@ -407,7 +419,11 @@ int main( int argc, char* argv[] )
 		case eMAIN_MENU:
 			//Call function for main menu
 			UpdateMainMenu();
-
+			//Get the previous high score
+			GetHighScore();
+			//Display high scores
+			DisplayHighScore();
+			
 			//if enter is pressed change state to gameplay
 			if (IsKeyDown(257))
 			{
@@ -428,7 +444,26 @@ int main( int argc, char* argv[] )
 			UpdateGameState(deltaT);
 			if (scoreOne.score >= 10 || scoreTwo.score >=10)
 			{
-				eCurrentState = eEND;
+
+				//If the game ends then track the score for next game
+				HighScore.open("HighScore.txt", ios_base::out);
+
+				if (HighScore.is_open())
+				{
+					//write scores into file
+					HighScore << scoreOne.score << endl;
+					HighScore << scoreTwo.score << endl;
+
+					//Change gamestate to End
+					eCurrentState = eEND;
+				}
+				else
+				{
+					DrawString("Couldn't save Score!", screenWidth - 615, screenHieght - 200);
+				}
+
+				//Close the file
+				HighScore.close();
 			}
 
 			//if ESC is pressed then exit to main menu
@@ -452,6 +487,9 @@ int main( int argc, char* argv[] )
 
 			break;
 		case eHOWTO:
+			//Display High Scores on this part of the menu
+			DisplayHighScore();
+
 			SetFont(invadersFont);
 			DrawString("How to Play", screenWidth - 615, screenHieght - 200);
 			DrawString("Player One", screenWidth - 810, screenHieght - 250);
@@ -465,7 +503,7 @@ int main( int argc, char* argv[] )
 			DrawString("Move Up: Up Arrow", screenWidth - 410, screenHieght - 340);
 			DrawString("Move Down: Down Arrow", screenWidth - 410, screenHieght - 370);
 
-			DrawString("Press Excape to return to Main Menu", screenWidth - 740, screenHieght - 450);
+			DrawString("Press Escape to return to Main Menu", screenWidth - 740, screenHieght - 450);
 
 			if (IsKeyDown(256))
 			{
@@ -560,10 +598,10 @@ void UpdateMainMenu()
 {
 	//Everything to make main menu
 	SetFont(invadersFont);
-	DrawString("PONG", screenWidth - 585, screenHieght - 100);
-	DrawString("Main Menu", screenWidth - 615, screenHieght - 200);
-	DrawString("Press Enter to start", screenWidth - 660, screenHieght - 250);
-	DrawString("Press Space to read the How To", screenWidth - 730, screenHieght - 300);
+	DrawString("SPACE INVADERS PONG", screenWidth - 675, screenHieght - 100);
+	DrawString("Main Menu", screenWidth - 590, screenHieght - 200);
+	DrawString("Press Enter to start", screenWidth - 630, screenHieght - 250);
+	DrawString("Press Space to read the How To", screenWidth - 700, screenHieght - 300);
 	
 }
 
@@ -676,4 +714,36 @@ void UpdateEnemyMove()
 			}
 
 	MoveSprite(ball.ballSprite, ball.ballX, ball.ballY);
+}
+
+void GetHighScore()
+{
+	HighScore.open("HighScore.txt", ios_base::in);
+
+
+	//Read and get scoreOne
+	float scoreOne;
+	HighScore >> scoreOne;
+
+	//Read and get scoreTwo
+	float scoreTwo;
+	HighScore >> scoreTwo;
+
+	//Flush stream buffer and close file
+	HighScore.sync();
+	HighScore.close();
+	HighScore.clear();
+
+	//Set the scores to a char so it can be displayed later
+	itoa(scoreOne, highScoreOne, 10);
+	itoa(scoreTwo, highScoreTwo, 10);
+}
+
+void DisplayHighScore()
+{
+	DrawString("Old High Scores", screenWidth - 600, screenHieght - 600);
+	DrawString("Player 1: ", screenWidth - 660, screenHieght - 650);
+	DrawString("Player 2: ", screenWidth - 470, screenHieght - 650);
+	DrawString(highScoreOne, screenWidth - 530, screenHieght - 650);
+	DrawString(highScoreTwo, screenWidth - 350, screenHieght - 650);
 }
