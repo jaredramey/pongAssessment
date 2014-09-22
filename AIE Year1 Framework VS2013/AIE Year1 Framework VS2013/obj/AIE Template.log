@@ -1,33 +1,33 @@
-﻿Build started 9/22/2014 9:53:43 AM.
+﻿Build started 9/22/2014 10:13:49 AM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\pongAssessment\AIE Year1 Framework VS2013\AIE Year1 Framework VS2013\AIE Template.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt source\main.cpp
          main.cpp
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(380): warning C4244: 'argument' : conversion from 'float' to 'unsigned int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(384): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(389): warning C4244: 'argument' : conversion from 'float' to 'unsigned int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(393): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(399): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(402): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(476): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(523): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(540): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(374): warning C4101: 'myArray' : unreferenced local variable
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(613): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(613): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(381): warning C4244: 'argument' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(385): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(390): warning C4244: 'argument' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(394): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(400): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(403): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(482): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(529): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(546): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(375): warning C4101: 'myArray' : unreferenced local variable
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(620): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(620): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
                  c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(614): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(614): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(621): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(621): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
                  c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(615): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(616): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(649): warning C4305: '+=' : truncation from 'double' to 'float'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(661): warning C4305: '+=' : truncation from 'double' to 'float'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(738): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(738): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(622): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(623): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(656): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(668): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(745): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(745): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
                  c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(739): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(739): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(746): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\pongassessment\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(746): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
                  c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\AIE Template_d.exe" /INCREMENTAL /NOLOGO /LIBPATH:./libs AIE_1st_Year_Framework_d.lib kernel32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"bin\AIE Template_d.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"bin\AIE Template_d.lib" /MACHINE:X86 obj\main.obj
@@ -64,4 +64,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.49
+Time Elapsed 00:00:01.38
