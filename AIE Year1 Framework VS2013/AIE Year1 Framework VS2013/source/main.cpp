@@ -431,11 +431,13 @@ int main( int argc, char* argv[] )
 				eCurrentState = eGAMEPLAY;
 			}
 
+			//if Space is pressed then go to the How To menu
 			if (IsKeyDown(32))
 			{
 				eCurrentState = eHOWTO;
 			}
 
+			//if ESC is pressed then exit the program
 			if (IsKeyDown(256))
 			{
 				exitLoop = true;
@@ -463,6 +465,7 @@ int main( int argc, char* argv[] )
 					//Change gamestate to End
 					eCurrentState = eEND;
 				}
+				//If something happens then tell the user
 				else
 				{
 					DrawString("Couldn't save Score!", screenWidth - 615, screenHieght - 200);
@@ -511,6 +514,7 @@ int main( int argc, char* argv[] )
 
 			DrawString("Press Backspace to return to Main Menu", screenWidth - 740, screenHieght - 450);
 
+			//If backspace is pressed then return to main menu
 			if (IsKeyDown(259))
 			{
 				eCurrentState = eMAIN_MENU;
@@ -629,11 +633,14 @@ void UpdateGameState(float deltaTime)
 	DrawSprite(player.spriteID);
 	player.SetCorners(xPos, yPos, player.width, player.hieght);
 
+	//Player movment handled by it's struct
 	player2.Move2(GetDeltaTime(), 800.f);
 	MoveSprite(player2.spriteID, player2.x2, player2.y2);
 	DrawSprite(player2.spriteID);
 	player2.SetCorners(player2.x2, player2.y2, player2.width, player2.hieght);
 
+	//Still couldn't get ball stuct to handle movement so replaced with a function so it works
+	//Called updateenemy because I wasn't thinking and didn't realise till everything was working with what the name was
 	UpdateEnemyMove();
 	MoveSprite(ball.ballSprite, ball.ballX, ball.ballY);
 	DrawSprite(ball.ballSprite);
@@ -669,11 +676,13 @@ void UpdateEnemyMove()
 		}
 	}
 
+	//if the last hit was by player 1 then head towards player 2
 	if (ballHitOne == true)
 	{
 		ball.ballX += ball.ballVelocity;
 	}
 
+	//if the last hit was by player 2 then head towards player 1
 	if (ballHitTwo == true)
 	{
 		ball.ballX -= ball.ballVelocity;
@@ -748,6 +757,7 @@ void GetHighScore()
 
 void DisplayHighScore()
 {
+	//function for displaying high score put into a function so I didn't have to copy paste a lot
 	DrawString("Old High Scores", screenWidth - 600, screenHieght - 600);
 	DrawString("Player 1: ", screenWidth - 660, screenHieght - 650);
 	DrawString("Player 2: ", screenWidth - 470, screenHieght - 650);
