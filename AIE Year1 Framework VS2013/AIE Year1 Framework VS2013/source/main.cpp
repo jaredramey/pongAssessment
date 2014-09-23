@@ -473,7 +473,7 @@ int main( int argc, char* argv[] )
 			}
 
 			//if ESC is pressed then exit to main menu
-			if (IsKeyDown(256))
+			if (IsKeyDown(259))
 			{
 				eCurrentState = eMAIN_MENU;
 				//Reset all values and return to start
@@ -509,9 +509,9 @@ int main( int argc, char* argv[] )
 			DrawString("Move Up: Up Arrow", screenWidth - 410, screenHieght - 340);
 			DrawString("Move Down: Down Arrow", screenWidth - 410, screenHieght - 370);
 
-			DrawString("Press Escape to return to Main Menu", screenWidth - 740, screenHieght - 450);
+			DrawString("Press Backspace to return to Main Menu", screenWidth - 740, screenHieght - 450);
 
-			if (IsKeyDown(256))
+			if (IsKeyDown(259))
 			{
 				eCurrentState = eMAIN_MENU;
 			}
@@ -566,10 +566,10 @@ int main( int argc, char* argv[] )
 			}
 
 			//Let user deside what to do next
-			DrawString("Press Escape to continue to the menu or Enter to return to the game!", screenWidth - 900, screenHieght - 400);
+			DrawString("Press Backspace to continue to the menu or Enter to return to the game!", screenWidth - 900, screenHieght - 400);
 
 			//If esc is pressed then return to main menu
-			if (IsKeyDown(256))
+			if (IsKeyDown(259))
 			{
 				eCurrentState = eMAIN_MENU;
 				oneWin = false;

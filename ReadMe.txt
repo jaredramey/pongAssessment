@@ -16,4 +16,4 @@ Down:  Down Arrow \/
 Left:  Left Arrow <--
 Right: Right Arrow -->
 
-During the game you can press the ESC key at any time to return to the Main Menu!
+During the game you can press the Backspace key at any time to return to the Main Menu!
